@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Special Message For You ❤</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti Library for Celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Google Fonts - Inter & Dancing Script for Romantic Aesthetic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at center, #2d050b 0%, #120104 100%);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    
+    .font-romantic {
+      font-family: 'Dancing Script', cursive;
+    }
+
+    /* Floating Hearts Background Animation */
+    .heart-bg {
+      position: fixed;
+      top: -10vh;
+      color: rgba(239, 68, 68, 0.45);
+      font-size: 1.5rem;
+      user-select: none;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(115vh) rotate(0deg) scale(0.8);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.8;
+      }
+      80% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-15vh) rotate(360deg) scale(1.3);
+        opacity: 0;
+      }
+    }
+
+    /* Glassmorphism Card Style */
+    .glass-card {
+      background: rgba(35, 8, 14, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      box-shadow: 0 0 30px rgba(225, 29, 72, 0.25);
+    }
+
+    /* Pulse Glow Animation */
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px rgba(244, 63, 94, 0.4); }
+      50% { box-shadow: 0 0 40px rgba(244, 63, 94, 0.8); }
+    }
+
+    .pulse-glow {
+      animation: pulseGlow 2.5s infinite;
+    }
+
+    /* Smooth Transition for Step Cards */
+    .step-card {
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Dodging No Button Container Positioning */
+    #no-btn-wrapper {
+      transition: all 0.2s ease-out;
+    }
+  </style>
+</head>
+<body class="text-rose-100 flex items-center justify-center min-h-screen p-4 relative selection:bg-rose-500 selection:text-white">
+
+  <div id="hearts-container" class="fixed inset-0 overflow-hidden pointer-events-none"></div>
+
+  <!-- Audio Element with Romantic Track -->
+  <audio id="bg-music" loop preload="auto">
+    <!-- Free Royalty-Free Acoustic Romantic Track -->
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-story-112316.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Music Control Toggle -->
+  <button id="music-toggle" onclick="toggleAudio()" class="fixed top-4 right-4 z-50 bg-rose-950/80 hover:bg-rose-900 border border-rose-500/40 text-rose-200 p-3 rounded-full shadow-lg backdrop-blur-md transition-transform active:scale-95 flex items-center gap-2">
+    <i id="music-icon" data-lucide="music" class="w-5 h-5 text-rose-400"></i>
+    <span id="music-text" class="text-xs font-semibold pr-1 hidden sm:inline">Play Music ❤</span>
+  </button>
+
+  <main class="w-full max-w-xl z-10 my-auto">
+    <div class="glass-card rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden pulse-glow">
+
+      <!-- Decorative Top Hearts Bar -->
+      <div class="flex justify-center items-center gap-2 mb-4 text-rose-500">
+        <i data-lucide="heart" class="w-5 h-5 fill-rose-500 animate-bounce"></i>
+        <i data-lucide="heart" class="w-7 h-7 fill-rose-500 animate-pulse"></i>
+        <i data-lucide="heart" class="w-5 h-5 fill-rose-500 animate-bounce" style="animation-delay: 0.2s;"></i>
+      </div>
+
+      <!-- ================= STEP 1: WELCOME ================= -->
+      <div id="step-1" class="step-card">
+        <h1 class="text-4xl sm:text-5xl font-bold font-romantic text-rose-400 mb-4 drop-shadow">
+          Hey Sunshine ❤
+        </h1>
+        <p class="text-rose-200/90 text-base sm:text-lg leading-relaxed mb-8">
+          I created this special place just for you to take a quick stroll down memory lane with me...
+        </p>
+        <button onclick="nextStep(2)" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-semibold rounded-2xl shadow-lg shadow-rose-900/50 transform hover:-translate-y-0.5 active:translate-y-0 transition flex items-center justify-center gap-2 mx-auto">
+          <span>Let's Begin</span>
+          <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- ================= STEP 2: OUR MEMORY ================= -->
+      <div id="step-2" class="step-card hidden">
+        <span class="inline-block px-3 py-1 bg-rose-950/80 border border-rose-500/30 text-rose-300 text-xs font-semibold rounded-full mb-3">
+          Memory Lane 💭
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-rose-200 mb-4">
+          Remember when...
+        </h2>
+        
+        <!-- Story Callout Card -->
+        <div class="bg-rose-950/40 border border-rose-500/20 rounded-2xl p-5 mb-6 text-left text-rose-100/90 text-sm sm:text-base leading-relaxed space-y-3">
+          <p>
+            I still remember all our jokes, non-stop laughter, and all those crazy pranks we pulled on everyone! 😂
+          </p>
+          <div class="p-3 bg-rose-900/30 border-l-4 border-rose-500 rounded-r-xl font-medium text-rose-200">
+            "Especially that legendary prank when you were admitted at <strong>Nishtar Hospital in Multan</strong> and we completely pulled Danish's leg!" 🏥⚡
+          </div>
+          <p>
+            Every single moment with you—from the wild laughter to the quiet times—has made my world infinitely brighter.
+          </p>
+        </div>
+
+        <button onclick="nextStep(3)" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-semibold rounded-2xl shadow-lg shadow-rose-900/50 transform hover:-translate-y-0.5 active:translate-y-0 transition flex items-center justify-center gap-2 mx-auto">
+          <span>A Few Questions...</span>
+          <i data-lucide="sparkles" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- ================= STEP 3: QUESTION 1 ================= -->
+      <div id="step-3" class="step-card hidden">
+        <span class="inline-block px-3 py-1 bg-rose-950/80 border border-rose-500/30 text-rose-300 text-xs font-semibold rounded-full mb-3">
+          Quick Question #1
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-rose-200 mb-6">
+          Who loves who more in this relationship? 💖
+        </h2>
+
+        <div class="space-y-3 mb-6">
+          <button onclick="answerQ1('You love me more!')" class="w-full p-4 bg-rose-950/50 hover:bg-rose-900/60 border border-rose-500/30 rounded-xl text-left text-rose-200 font-medium transition flex items-center justify-between group">
+            <span>Option A: I love you more!</span>
+            <i data-lucide="heart" class="w-5 h-5 text-rose-400 group-hover:fill-rose-400 transition"></i>
+          </button>
+          <button onclick="answerQ1('You definitely love me more!')" class="w-full p-4 bg-rose-950/50 hover:bg-rose-900/60 border border-rose-500/30 rounded-xl text-left text-rose-200 font-medium transition flex items-center justify-between group">
+            <span>Option B: You love me more!</span>
+            <i data-lucide="heart" class="w-5 h-5 text-rose-400 group-hover:fill-rose-400 transition"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= STEP 4: QUESTION 2 ================= -->
+      <div id="step-4" class="step-card hidden">
+        <span class="inline-block px-3 py-1 bg-rose-950/80 border border-rose-500/30 text-rose-300 text-xs font-semibold rounded-full mb-3">
+          Quick Question #2
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-rose-200 mb-6">
+          Are you ready to deal with my craziness and pranks forever? 🤪
+        </h2>
+
+        <div class="space-y-3 mb-6">
+          <button onclick="nextStep(5)" class="w-full p-4 bg-rose-950/50 hover:bg-rose-900/60 border border-rose-500/30 rounded-xl text-center text-rose-200 font-medium transition">
+            Yes, I signed up for this! 📜❤
+          </button>
+          <button onclick="nextStep(5)" class="w-full p-4 bg-rose-950/50 hover:bg-rose-900/60 border border-rose-500/30 rounded-xl text-center text-rose-200 font-medium transition">
+            I have no choice, I love it! Endless jokes! 🎉
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= STEP 5: THE GRAND FINALE PROPOSAL ================= -->
+      <div id="step-5" class="step-card hidden relative">
+        <div class="w-16 h-16 bg-rose-600/30 rounded-full flex items-center justify-center mx-auto mb-4 border border-rose-500/50">
+          <i data-lucide="heart-handshake" class="w-10 h-10 text-rose-400 animate-pulse"></i>
+        </div>
+
+        <h2 class="text-3xl sm:text-5xl font-bold font-romantic text-rose-300 mb-4 drop-shadow-md">
+          Will you be mine for the rest of my life?
+        </h2>
+        <p class="text-rose-200/80 text-sm sm:text-base mb-8">
+          Through all the laughter, hospital pranks, quiet mornings, and crazy adventures... ❤
+        </p>
+
+        <!-- Proposal Choice Buttons Container -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 relative min-h-[120px] pt-2">
+          
+          <!-- BIG YES BUTTON -->
+          <button id="yes-btn" onclick="acceptProposal()" class="w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white font-extrabold text-xl rounded-2xl shadow-xl shadow-green-950/80 transform hover:scale-105 active:scale-95 transition z-20 flex items-center justify-center gap-2">
+            <i data-lucide="heart" class="w-6 h-6 fill-white"></i>
+            <span>YES! FOREVER!</span>
+          </button>
+
+          <!-- PLAYFUL DODGING/TRICK NO BUTTON WRAPPER -->
+          <div id="no-btn-wrapper" class="w-full sm:w-auto z-20">
+            <button id="no-btn" onmouseover="dodgeNoButton()" onclick="handleNoClick()" class="w-full sm:w-auto px-8 py-5 bg-rose-950/80 border border-rose-600/50 hover:bg-rose-900 text-rose-300 font-bold text-lg rounded-2xl transition">
+              <span id="no-btn-text">NO 😜</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ================= STEP 6: CELEBRATION SCREEN ================= -->
+      <div id="step-celebration" class="step-card hidden">
+        <div class="py-6">
+          <div class="w-24 h-24 bg-rose-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-rose-500 animate-bounce">
+            <i data-lucide="heart" class="w-14 h-14 text-rose-500 fill-rose-500"></i>
+          </div>
+
+          <span class="text-rose-400 font-semibold tracking-widest text-sm uppercase mb-2 block">
+            Official Announcement
+          </span>
+
+          <h2 class="text-4xl sm:text-6xl font-extrabold font-romantic text-rose-300 mb-6 drop-shadow-lg leading-tight">
+            SHE SAID YES! ❤❤❤
+          </h2>
+
+          <div class="bg-rose-950/60 border border-rose-500/30 rounded-2xl p-6 text-rose-100 space-y-3 mb-8 shadow-inner">
+            <p class="text-lg sm:text-xl font-medium">
+              You just made me the happiest person in the whole wide world! 🎉
+            </p>
+            <p class="text-sm sm:text-base text-rose-200/80">
+              Here's to a lifetime filled with love, laughter, endless happiness, and many more hilarious pranks!
+            </p>
+          </div>
+
+          <div class="text-rose-400 font-romantic text-3xl font-bold">
+            Forever & Always Yours ✨
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Sound setup
+    const bgMusic = document.getElementById('bg-music');
+    let isMusicPlaying = false;
+
+    function toggleAudio() {
+      const musicIcon = document.getElementById('music-icon');
+      const musicText = document.getElementById('music-text');
+      
+      if (isMusicPlaying) {
+        bgMusic.pause();
+        isMusicPlaying = false;
+        musicText.textContent = "Play Music ❤";
+        musicIcon.setAttribute('data-lucide', 'music');
+      } else {
+        bgMusic.play().then(() => {
+          isMusicPlaying = true;
+          musicText.textContent = "Music Playing 🎵";
+          musicIcon.setAttribute('data-lucide', 'volume-2');
+        }).catch(err => {
+          console.log("Audio autoplay restricted. User interaction required.");
+        });
+      }
+      lucide.createIcons();
+    }
+
+    // Auto-attempt music play on first screen touch/click
+    document.body.addEventListener('click', function autoPlayOnce() {
+      if (!isMusicPlaying) {
+        toggleAudio();
+      }
+      document.body.removeEventListener('click', autoPlayOnce);
+    }, { once: true });
+
+    function createHearts() {
+      const container = document.getElementById('hearts-container');
+      const heartSymbols = ['❤', '💖', '💗', '💕', '💘'];
+      const heartCount = 25;
+
+      for (let i = 0; i < heartCount; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart-bg';
+        heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+        heart.style.left = `${Math.random() * 100}vw`;
+        heart.style.animationDuration = `${6 + Math.random() * 8}s`;
+        heart.style.animationDelay = `${Math.random() * 5}s`;
+        heart.style.fontSize = `${1 + Math.random() * 1.8}rem`;
+        container.appendChild(heart);
+      }
+    }
+    createHearts();
+
+    function nextStep(stepNumber) {
+      // Hide all steps
+      document.querySelectorAll('.step-card').forEach(card => {
+        card.classList.add('hidden');
+      });
+
+      // Show target step
+      const targetStep = document.getElementById(`step-${stepNumber}`);
+      if (targetStep) {
+        targetStep.classList.remove('hidden');
+      }
+    }
+
+    function answerQ1(answer) {
+      nextStep(4);
+    }
+
+    let dodgeCount = 0;
+    const noBtnWrapper = document.getElementById('no-btn-wrapper');
+    const noBtnText = document.getElementById('no-btn-text');
+    const yesBtn = document.getElementById('yes-btn');
+
+    function dodgeNoButton() {
+      dodgeCount++;
+      
+      if (dodgeCount === 1) {
+        noBtnText.textContent = "Are you sure? 🥺";
+      } else if (dodgeCount === 2) {
+        noBtnText.textContent = "Nice try! 😜";
+      } else if (dodgeCount === 3) {
+        noBtnText.textContent = "NO is disabled! 😂";
+      } else if (dodgeCount >= 4) {
+        noBtnText.textContent = "Even NO = YES! ❤";
+      }
+
+      // Grow YES button on every dodge
+      const currentScale = 1 + (dodgeCount * 0.15);
+      yesBtn.style.transform = `scale(${Math.min(currentScale, 1.6)})`;
+
+      // Random repositioning on hover/touch
+      const x = (Math.random() - 0.5) * 220;
+      const y = (Math.random() - 0.5) * 160;
+      noBtnWrapper.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    function handleNoClick() {
+      // If she clicks "NO", turn it into YES immediately!
+      acceptProposal();
+    }
+
+    function acceptProposal() {
+      nextStep('celebration');
+
+      // Continuous Confetti Shower
+      const duration = 5 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+        // Confetti burst from both sides
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+      }, 250);
+    }
+  </script>
+</body>
+</html>
